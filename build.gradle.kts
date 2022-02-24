@@ -5,12 +5,14 @@ import java.util.Date
 buildscript {
     repositories {
         maven("https://maven.minecraftforge.net")
+        maven("https://maven.parchmentmc.org")
         mavenCentral()
     }
     dependencies {
         classpath("net.minecraftforge.gradle:ForgeGradle:5.1.+") {
             isChanging = true
         }
+        classpath("org.parchmentmc:librarian:1.+")
     }
 }
 
@@ -20,6 +22,7 @@ plugins {
     java
 }
 apply(plugin="net.minecraftforge.gradle")
+apply(plugin="org.parchmentmc.librarian.forgegradle")
 
 group = "io.github.samarium150"
 version = "1.0.0"
@@ -38,7 +41,7 @@ val Project.minecraft: net.minecraftforge.gradle.common.util.MinecraftExtension
     get() = extensions.getByType()
 
 minecraft.let {
-    it.mappings("official", "1.16.5")
+    it.mappings("parchment", "2021.10.17-1.16.5")
     it.runs {
         create("client") {
             workingDirectory(project.file("run"))
