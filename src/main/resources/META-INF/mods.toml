@@ -1,0 +1,16 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[1.16,)"
+issueTrackerURL="https://github.com/Samarium150/MineChronoArk/issues"
+license="GNU GENERAL PUBLIC LICENSE Version 3"
+
+[[mods]]
+modId = "mine_chrono_ark"
+version = "${file.jarVersion}"
+displayName = "Mine Chrono Ark"
+updateJSONURL="https://raw.githubusercontent.com/Samarium150/MineChronoArk/main/docs/update.json"
+#displayURL="http://example.com/" #optional
+#logoFile="chronoarkcraft.png" #optional
+authors = "Samarium"
+description = '''
+Add weapons and accessory items from the game ChronoArk
+'''
