@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "io.github.samarium150.minecraft.mod.mine_chrono_ark.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "LivingEntityMixin"
+  ]
+}

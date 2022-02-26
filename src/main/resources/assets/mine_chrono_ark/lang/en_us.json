@@ -1,0 +1,20 @@
+{
+  "itemGroup.mine_chrono_ark": "Chrono Ark Craft",
+  "item.mine_chrono_ark.axe_of_rage": "Axe of Rage",
+  "item.mine_chrono_ark.black_crescent": "Black Crescent",
+  "item.mine_chrono_ark.bastard_sword": "Bastard Sword",
+  "item.mine_chrono_ark.dark_flame_sword": "Dark Flame Sword",
+  "item.mine_chrono_ark.forgotten_king_s_sword": "Forgotten King's Sword",
+  "item.mine_chrono_ark.high_priest_s_legacy": "High Priest's Legacy",
+  "item.mine_chrono_ark.karsaga": "Karsaga",
+  "item.mine_chrono_ark.long_sword": "Long Sword",
+  "item.mine_chrono_ark.messiah_blade_prototype": "Messiah Blade Prototype",
+  "item.mine_chrono_ark.rapier": "Rapier",
+  "item.mine_chrono_ark.revenger": "Revenger",
+  "item.mine_chrono_ark.rod_of_faith": "Rod of Faith",
+  "item.mine_chrono_ark.rusty_dagger": "Rusty Dagger",
+  "item.mine_chrono_ark.rusty_hammer": "Rusty Hammer",
+  "item.mine_chrono_ark.wooden_bat": "Wooden Bat",
+  "item.mine_chrono_ark.wooden_sword_plus_thirteen": "Wooden Sword +13",
+  "tooltip.mine_chrono_ark.wooden_sword_plus_thirteen": "Armor Penetration +50$\nAttack +13$\nAttack +2"
+}

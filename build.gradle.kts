@@ -13,6 +13,7 @@ buildscript {
             isChanging = true
         }
         classpath("org.parchmentmc:librarian:1.+")
+        classpath("org.spongepowered:mixingradle:0.7.+")
     }
 }
 
@@ -23,9 +24,10 @@ plugins {
 }
 apply(plugin="net.minecraftforge.gradle")
 apply(plugin="org.parchmentmc.librarian.forgegradle")
+apply(plugin="org.spongepowered.mixin")
 
 group = "io.github.samarium150"
-version = "1.0.0"
+version = "0.1.0-alpha.1"
 
 repositories {
     mavenCentral()
@@ -34,6 +36,7 @@ repositories {
 
 dependencies {
     "minecraft"("net.minecraftforge:forge:1.16.5-36.2.28")
+    "annotationProcessor"("org.spongepowered:mixin:0.8.5:processor")
     implementation("thedarkcolour:kotlinforforge:1.16.0")
 }
 
@@ -47,7 +50,7 @@ minecraft.let {
             workingDirectory(project.file("run"))
             property("forge.logging.console.level", "debug")
             mods {
-                this.create("example-mod") {
+                this.create("mine_chrono_ark") {
                     source(sourceSets.main.get())
                 }
             }
@@ -56,12 +59,21 @@ minecraft.let {
             workingDirectory(project.file("run"))
             property("forge.logging.console.level", "debug")
             mods {
-                this.create("example-mod") {
+                this.create("mine_chrono_ark") {
                     source(sourceSets.main.get())
                 }
             }
         }
     }
+}
+
+val Project.mixin: org.spongepowered.asm.gradle.plugins.MixinExtension
+    get() = extensions.getByType()
+
+mixin.let {
+//    it.add(sourceSets.main.get(), "mine_chrono_ark.mixins.refmap.json")
+    it.config("mine_chrono_ark.mixins.json")
+    it.setDebug(Pair("verbose", true))
 }
 
 tasks {
@@ -89,15 +101,15 @@ tasks {
         targetCompatibility = javaVersion
     }
     withType<Jar> {
-        archiveBaseName.set("example-mod")
+        archiveBaseName.set("mine_chrono_ark")
         manifest {
             attributes(
                 mapOf(
                     "Specification-Title" to project.name,
-                    "Specification-Vendor" to "author",
+                    "Specification-Vendor" to "Samarium",
                     "Specification-Version" to "1",
                     "Implementation-Title" to project.name,
-                    "Implementation-Vendor" to "author",
+                    "Implementation-Vendor" to "Samarium",
                     "Implementation-Version" to project.version,
                     "Implementation-Timestamp" to SimpleDateFormat("yyyy-MM-dd").format(Date())
                 )
