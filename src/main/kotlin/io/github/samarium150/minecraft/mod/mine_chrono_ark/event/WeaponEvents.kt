@@ -22,6 +22,7 @@ import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.MOD_ID
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.getArmorPenetratedDamage
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.hurtArmor
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.util.EntityDamageSource
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.eventbus.api.EventPriority
@@ -51,6 +52,7 @@ object WeaponEvents {
             )
         )
         if (damageSource is EntityDamageSource && sourceEntity is LivingEntity) {
+            logger.info("${sourceEntity.getAttribute(Attributes.ATTACK_DAMAGE)?.modifiers}")
             val weapon = sourceEntity.mainHandItem.item
             if (weapon === WeaponRegistry.WOODEN_SWORD_PLUS_THIRTEEN.item &&
                 damageSource.msgId != WoodenSwordPlusThirteen.NAME

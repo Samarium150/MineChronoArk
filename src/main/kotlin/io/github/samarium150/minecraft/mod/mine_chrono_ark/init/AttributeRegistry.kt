@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package io.github.samarium150.minecraft.mod.mine_chrono_ark
+package io.github.samarium150.minecraft.mod.mine_chrono_ark.init
 
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.init.AttributeRegistry
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.init.WeaponRegistry
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.ArmorPenetration
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.MOD_ID
-import net.minecraftforge.fml.common.Mod
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import net.minecraftforge.registries.ForgeRegistries
+import thedarkcolour.kotlinforforge.forge.KDeferredRegister
 
-@Mod(MOD_ID)
-object MineChronoArk {
-    init {
-        WeaponRegistry.WEAPONS.register(MOD_BUS)
-        AttributeRegistry.ATTRIBUTES.register(MOD_BUS)
+object AttributeRegistry {
+
+    val ATTRIBUTES = KDeferredRegister(ForgeRegistries.ATTRIBUTES, MOD_ID)
+
+    val ARMOR_PENETRATION by ATTRIBUTES.registerObject(ArmorPenetration.NAME) {
+        ArmorPenetration()
     }
 }

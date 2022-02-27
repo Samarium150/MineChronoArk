@@ -24,14 +24,12 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.CombatRules
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import java.util.function.Consumer
 
 private val logger: Logger = LogManager.getLogger("$MOD_ID.combat_utils")
 
 fun LivingEntity.getArmorPenetratedDamage(damage: Float, percentage: Float): Float {
     logger.info("${this.name.string}(Armor: ${this.armorValue}, " +
         "Toughness: ${this.getAttributeValue(Attributes.ARMOR_TOUGHNESS)})")
-
     return CombatRules.getDamageAfterAbsorb(
         damage,
         this.armorValue * percentage,
@@ -44,7 +42,7 @@ fun LivingEntity.hurtArmor(damage: Float) {
         var averagedDamage = damage * 0.25f
         if (averagedDamage < 1.0f) averagedDamage = 1.0f
         val armorSlots: MutableList<ItemStack> = ArrayList()
-        this.armorSlots.forEach(Consumer { e: ItemStack -> armorSlots.add(e) })
+        this.armorSlots.forEach(armorSlots::add)
         logger.info(armorSlots)
         for (i in armorSlots.indices) {
             val slot = armorSlots[i]

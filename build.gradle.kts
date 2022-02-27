@@ -27,7 +27,7 @@ apply(plugin="org.parchmentmc.librarian.forgegradle")
 apply(plugin="org.spongepowered.mixin")
 
 group = "io.github.samarium150"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 
 repositories {
     mavenCentral()
@@ -35,7 +35,7 @@ repositories {
 }
 
 dependencies {
-    "minecraft"("net.minecraftforge:forge:1.16.5-36.2.28")
+    "minecraft"("net.minecraftforge:forge:1.16.5-36.2.29")
     "annotationProcessor"("org.spongepowered:mixin:0.8.5:processor")
     implementation("thedarkcolour:kotlinforforge:1.16.0")
 }

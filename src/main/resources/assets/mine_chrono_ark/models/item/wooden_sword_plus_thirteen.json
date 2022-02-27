@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "minecraft:item/wooden_sword"
+    "layer0": "mine_chrono_ark:item/wooden_sword_plus_thirteen"
   }
 }
