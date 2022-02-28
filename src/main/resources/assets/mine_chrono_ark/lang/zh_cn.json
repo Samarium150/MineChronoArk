@@ -16,5 +16,6 @@
   "item.mine_chrono_ark.rusty_hammer": "生锈的铁锤",
   "item.mine_chrono_ark.wooden_bat": "木棒",
   "item.mine_chrono_ark.wooden_sword_plus_thirteen": "木剑 +13",
+  "generic.armor_penetration": "护甲穿透",
   "tooltip.mine_chrono_ark.wooden_sword_plus_thirteen": "护甲穿透 +50$\n攻击力 +13$\n攻击力 +2"
 }

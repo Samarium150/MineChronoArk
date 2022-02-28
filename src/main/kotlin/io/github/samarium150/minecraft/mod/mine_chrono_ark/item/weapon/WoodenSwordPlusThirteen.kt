@@ -19,8 +19,10 @@ package io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.ImmutableMultimap
 import com.google.common.collect.Multimap
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.ArmorPenetration
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.ModItemGroup
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.ModRarity
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.clone
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.tooltipPrefix
 import net.minecraft.client.resources.I18n
 import net.minecraft.client.util.ITooltipFlag
@@ -48,11 +50,12 @@ class WoodenSwordPlusThirteen : SwordItem(
     companion object {
         const val NAME = "wooden_sword_plus_thirteen"
         val PROPERTY: Properties = Properties().tab(ModItemGroup).rarity(ModRarity.LEGENDARY)
-        val modifiers: HashMultimap<Attribute, AttributeModifier> = HashMultimap.create()
+        val mainHandModifiers: Multimap<Attribute, AttributeModifier> = HashMultimap.create()
+        val offhandModifiers: Multimap<Attribute, AttributeModifier> = HashMultimap.create()
     }
 
     init {
-        modifiers.putAll(
+        mainHandModifiers.putAll(
             Attributes.ATTACK_DAMAGE,
             listOf(AttributeModifier(
                 "${NAME}_attack_booster",
@@ -64,19 +67,30 @@ class WoodenSwordPlusThirteen : SwordItem(
                 AttributeModifier.Operation.MULTIPLY_BASE
             ))
         )
+        mainHandModifiers.put(
+            ArmorPenetration,
+            AttributeModifier(
+                "${NAME}_armor_penetration",
+                50.0,
+                AttributeModifier.Operation.ADDITION
+            )
+        )
+        val defaultModifiers: Multimap<Attribute, AttributeModifier>
         SwordItem::class.java.getDeclaredField("defaultModifiers").let {
             it.isAccessible = true
             @Suppress("UNCHECKED_CAST")
-            val defaultModifiers = it.get(this) as Multimap<Attribute, AttributeModifier>
-            modifiers.putAll(defaultModifiers)
-            it.set(this, modifiers)
+            defaultModifiers = it.get(this) as Multimap<Attribute, AttributeModifier>
+            it.isAccessible = false
         }
+        offhandModifiers.putAll(mainHandModifiers.clone())
+        mainHandModifiers.putAll(defaultModifiers)
     }
 
     override fun getDefaultAttributeModifiers(pEquipmentSlot: EquipmentSlotType):
         Multimap<Attribute, AttributeModifier> {
         return when (pEquipmentSlot) {
-            EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND -> modifiers
+            EquipmentSlotType.MAINHAND -> mainHandModifiers
+            EquipmentSlotType.OFFHAND -> offhandModifiers
             else -> ImmutableMultimap.of()
         }
     }
@@ -87,10 +101,11 @@ class WoodenSwordPlusThirteen : SwordItem(
         components: MutableList<ITextComponent>,
         flag: ITooltipFlag
     ) {
-        I18n.get(tooltipPrefix + NAME)
-            .replace("$", "%")
-            .split("\n")
-            .map { StringTextComponent(it) }
-            .forEach(components::add)
+        if (flag.isAdvanced)
+            I18n.get(tooltipPrefix + NAME)
+                .replace("$", "%")
+                .split("\n")
+                .map { StringTextComponent(it) }
+                .forEach(components::add)
     }
 }

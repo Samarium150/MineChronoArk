@@ -19,5 +19,3 @@ package io.github.samarium150.minecraft.mod.mine_chrono_ark.util
 const val MOD_ID = "mine_chrono_ark"
 
 const val tooltipPrefix = "tooltip.$MOD_ID."
-
-const val attributePrefix = "attribute.name."

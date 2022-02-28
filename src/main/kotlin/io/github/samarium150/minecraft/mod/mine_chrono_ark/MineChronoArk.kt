@@ -25,7 +25,7 @@ import thedarkcolour.kotlinforforge.forge.MOD_BUS
 @Mod(MOD_ID)
 object MineChronoArk {
     init {
-        WeaponRegistry.WEAPONS.register(MOD_BUS)
         AttributeRegistry.ATTRIBUTES.register(MOD_BUS)
+        WeaponRegistry.WEAPONS.register(MOD_BUS)
     }
 }

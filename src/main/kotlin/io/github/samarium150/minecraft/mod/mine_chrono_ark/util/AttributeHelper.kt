@@ -14,18 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package io.github.samarium150.minecraft.mod.mine_chrono_ark.init
+package io.github.samarium150.minecraft.mod.mine_chrono_ark.util
 
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.ArmorPenetration
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.MOD_ID
-import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.kotlinforforge.forge.KDeferredRegister
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
+import net.minecraft.entity.ai.attributes.Attribute
+import net.minecraft.entity.ai.attributes.AttributeModifier
 
-object AttributeRegistry {
+fun AttributeModifier.clone(): AttributeModifier {
+    return AttributeModifier(this.name, this.amount, this.operation)
+}
 
-    val ATTRIBUTES = KDeferredRegister(ForgeRegistries.ATTRIBUTES, MOD_ID)
-
-    val ARMOR_PENETRATION by ATTRIBUTES.registerObject(ArmorPenetration.descriptionId) {
-        ArmorPenetration
+fun Multimap<Attribute, AttributeModifier>.clone(): Multimap<Attribute, AttributeModifier> {
+    val res = HashMultimap.create<Attribute, AttributeModifier>()
+    this.entries().forEach {
+        res.put(it.key, it.value.clone())
     }
+    return res
 }

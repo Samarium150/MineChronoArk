@@ -16,5 +16,6 @@
   "item.mine_chrono_ark.rusty_hammer": "Rusty Hammer",
   "item.mine_chrono_ark.wooden_bat": "Wooden Bat",
   "item.mine_chrono_ark.wooden_sword_plus_thirteen": "Wooden Sword +13",
+  "generic.armor_penetration": "Armor Penetration",
   "tooltip.mine_chrono_ark.wooden_sword_plus_thirteen": "Armor Penetration +50$\nAttack +13$\nAttack +2"
 }

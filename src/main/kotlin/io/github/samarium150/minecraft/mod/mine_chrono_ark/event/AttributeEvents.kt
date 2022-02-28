@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package io.github.samarium150.minecraft.mod.mine_chrono_ark.init
+package io.github.samarium150.minecraft.mod.mine_chrono_ark.event
 
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.ArmorPenetration
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.MOD_ID
-import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.kotlinforforge.forge.KDeferredRegister
+import net.minecraft.entity.EntityType
+import net.minecraftforge.event.entity.EntityAttributeModificationEvent
+import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 
-object AttributeRegistry {
-
-    val ATTRIBUTES = KDeferredRegister(ForgeRegistries.ATTRIBUTES, MOD_ID)
-
-    val ARMOR_PENETRATION by ATTRIBUTES.registerObject(ArmorPenetration.descriptionId) {
-        ArmorPenetration
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+object AttributeEvents {
+    @SubscribeEvent
+    fun modifyEntityAttribute(event: EntityAttributeModificationEvent) {
+        event.add(EntityType.PLAYER, ArmorPenetration, 0.0)
     }
 }

@@ -16,13 +16,11 @@
  */
 package io.github.samarium150.minecraft.mod.mine_chrono_ark.event
 
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.init.WeaponRegistry
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon.WoodenSwordPlusThirteen
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.ArmorPenetration
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.MOD_ID
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.getArmorPenetratedDamage
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.hurtArmor
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.util.EntityDamageSource
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.eventbus.api.EventPriority
@@ -52,17 +50,19 @@ object WeaponEvents {
             )
         )
         if (damageSource is EntityDamageSource && sourceEntity is LivingEntity) {
-            logger.info("${sourceEntity.getAttribute(Attributes.ATTACK_DAMAGE)?.modifiers}")
+            val armorPenetrationAttribute = sourceEntity.getAttribute(ArmorPenetration)
+            logger.info(sourceEntity.attributes.save())
             val weapon = sourceEntity.mainHandItem.item
-            if (weapon === WeaponRegistry.WOODEN_SWORD_PLUS_THIRTEEN.item &&
-                damageSource.msgId != WoodenSwordPlusThirteen.NAME
+            if (armorPenetrationAttribute != null &&
+                damageSource.msgId != weapon.descriptionId
             ) {
                 event.isCanceled = true
-                val finalDamage: Float = target.getArmorPenetratedDamage(damage, 0.5f)
-                logger.info("\tFinal damage: $finalDamage")
+                val armorPenetration = 1 - armorPenetrationAttribute.value / 100f
+                val finalDamage: Float = target.getArmorPenetratedDamage(damage, armorPenetration.toFloat())
+                logger.info("\tArmor Penetration: $armorPenetration, Final damage: $finalDamage")
                 target.hurtArmor(damage)
                 val bypassedDamage = EntityDamageSource(
-                    WoodenSwordPlusThirteen.NAME, sourceEntity
+                    weapon.descriptionId, sourceEntity
                 ).bypassArmor()
                 target.invulnerableTime = 0
                 target.hurt(bypassedDamage, finalDamage)

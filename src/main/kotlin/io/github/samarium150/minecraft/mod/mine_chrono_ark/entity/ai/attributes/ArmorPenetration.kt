@@ -14,17 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-
 package io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes
 
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.attributePrefix
 import net.minecraft.entity.ai.attributes.RangedAttribute
 
-class ArmorPenetration : RangedAttribute(
-    DESCRIPTION_ID, 0.0, 0.0, 1.0
-) {
-    companion object {
-        const val DESCRIPTION_ID = "generic.armor_penetration"
-        const val NAME = "$attributePrefix.$DESCRIPTION_ID"
-    }
-}
+private const val DESCRIPTION_ID = "generic.armor_penetration"
+
+object ArmorPenetration : RangedAttribute(
+    DESCRIPTION_ID, 0.0, 0.0, 100.0
+)
