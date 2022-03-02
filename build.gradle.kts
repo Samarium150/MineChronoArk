@@ -27,7 +27,7 @@ apply(plugin="org.parchmentmc.librarian.forgegradle")
 apply(plugin="org.spongepowered.mixin")
 
 group = "io.github.samarium150"
-version = "0.1.0-alpha.3"
+version = "0.1.0-alpha.4"
 
 repositories {
     mavenCentral()

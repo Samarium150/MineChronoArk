@@ -14,15 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>
  */
-package io.github.samarium150.minecraft.mod.mine_chrono_ark.item
+package io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes
 
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.MOD_ID
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
+import net.minecraft.entity.ai.attributes.Attribute
 
-object ModItemGroup : ItemGroup(MOD_ID) {
-    override fun makeIcon(): ItemStack {
-        return ItemStack(Items.WOODEN_SWORD)
-    }
-}
+private const val DESCRIPTION_ID = "generic.critical_damage"
+
+object CriticalDamage : Attribute(
+    DESCRIPTION_ID, 150.0
+)

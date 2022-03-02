@@ -12,13 +12,15 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>
+ * along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
  */
 package io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.ArmorPenetration
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.CriticalChance
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.CriticalDamage
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.WeaponAttributeModifiersProvider
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.ModItemGroup
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.ModRarity
@@ -28,22 +30,20 @@ import net.minecraft.entity.ai.attributes.Attribute
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.inventory.EquipmentSlotType
+import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemTier
 import net.minecraft.item.SwordItem
 
-/**
- * Rarity Legendary
- * Armor Penetration +50%
- * Attack +13%
- * Attack +2
- */
-class WoodenSwordPlusThirteen : SwordItem(
-    ItemTier.WOOD, 3, -2.4f, PROPERTIES
+class CreativeSword : SwordItem(
+    ItemTier.NETHERITE, 3,-2.4f, PROPERTIES
 ), WeaponAttributeModifiersProvider {
 
     companion object {
-        const val NAME = "wooden_sword_plus_thirteen"
-        val PROPERTIES: Properties = Properties().tab(ModItemGroup).rarity(ModRarity.LEGENDARY)
+        const val NAME = "creative_sword"
+        val PROPERTIES: Properties = Properties()
+            .tab(ModItemGroup)
+            .rarity(ModRarity.CREATIVE)
+            .fireResistant()
         val mainHandModifiers: Multimap<Attribute, AttributeModifier> = HashMultimap.create()
         val offhandModifiers: Multimap<Attribute, AttributeModifier> = HashMultimap.create()
     }
@@ -57,7 +57,7 @@ class WoodenSwordPlusThirteen : SwordItem(
                 AttributeModifier.Operation.ADDITION
             ), AttributeModifier(
                 "${NAME}_attack_multiplier",
-                0.13,
+                0.10,
                 AttributeModifier.Operation.MULTIPLY_BASE
             ))
         )
@@ -69,6 +69,22 @@ class WoodenSwordPlusThirteen : SwordItem(
                 AttributeModifier.Operation.ADDITION
             )
         )
+        mainHandModifiers.put(
+            CriticalChance,
+            AttributeModifier(
+                "${NAME}_critical_chance",
+                100.0,
+                AttributeModifier.Operation.ADDITION
+            )
+        )
+        mainHandModifiers.put(
+            CriticalDamage,
+            AttributeModifier(
+                "${NAME}_critical_damage",
+                100.0,
+                AttributeModifier.Operation.ADDITION
+            )
+        )
         offhandModifiers.putAll(mainHandModifiers.clone())
         mainHandModifiers.putAll(this.getDefaultModifiers())
     }
@@ -77,6 +93,12 @@ class WoodenSwordPlusThirteen : SwordItem(
         get() = Companion.mainHandModifiers
     override val offhandModifiers: Multimap<Attribute, AttributeModifier>
         get() = Companion.offhandModifiers
+
+    override fun isDamageable(stack: ItemStack?): Boolean {
+        val tag = stack?.orCreateTag ?: return false
+        tag.putBoolean("Unbreakable", true)
+        return false
+    }
 
     override fun getDefaultAttributeModifiers(slot: EquipmentSlotType):
         Multimap<Attribute, AttributeModifier> {
