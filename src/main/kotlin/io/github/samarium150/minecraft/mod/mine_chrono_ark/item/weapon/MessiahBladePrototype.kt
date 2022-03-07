@@ -16,14 +16,58 @@
  */
 package io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon
 
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.WeaponAttributeModifiersProvider
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.clone
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.getDefaultModifiers
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.toImmutable
+import net.minecraft.entity.ai.attributes.Attribute
+import net.minecraft.entity.ai.attributes.AttributeModifier
+import net.minecraft.entity.ai.attributes.Attributes
+import net.minecraft.inventory.EquipmentSlotType
+import net.minecraft.item.ItemTier
+import net.minecraft.item.SwordItem
+
 /**
  * Rarity Legendary
  * Attack +1
- * Evade +5%
- * Accuracy +3%
- * Create one 'Unfinished illusion sword' each turn
+ * TODO: Evade +5%
+ * TODO: Accuracy +3%
+ * TODO: Create one 'Unfinished illusion sword' each turn
  * By the way, I'm capable of creating something
  * other than illusion swords. - Azar
  */
-class MessiahBladePrototype {
+class MessiahBladePrototype : SwordItem(
+    ItemTier.NETHERITE, 3, -2.4f, PROPERTIES
+), WeaponAttributeModifiersProvider {
+
+    companion object {
+        const val NAME = "messiah_blade_prototype"
+        private val PROPERTIES = Properties()
+        private val mainHandModifiers = HashMultimap.create<Attribute, AttributeModifier>()
+        private val offhandModifiers = HashMultimap.create<Attribute, AttributeModifier>()
+    }
+
+    init {
+        Companion.offhandModifiers.put(
+            Attributes.ATTACK_DAMAGE,
+            AttributeModifier(
+                "${NAME}_attack_booster",
+                1.0,
+                AttributeModifier.Operation.ADDITION
+            )
+        )
+        Companion.mainHandModifiers.putAll(this.getDefaultModifiers())
+        Companion.mainHandModifiers.putAll(Companion.offhandModifiers.clone())
+    }
+
+    override val mainHandModifiers: Multimap<Attribute, AttributeModifier>
+        get() = Companion.mainHandModifiers.toImmutable()
+    override val offhandModifiers: Multimap<Attribute, AttributeModifier>
+        get() = Companion.offhandModifiers.toImmutable()
+
+    override fun getDefaultAttributeModifiers(slot: EquipmentSlotType): Multimap<Attribute, AttributeModifier> {
+        return super<WeaponAttributeModifiersProvider>.getDefaultAttributeModifiers(slot)
+    }
 }

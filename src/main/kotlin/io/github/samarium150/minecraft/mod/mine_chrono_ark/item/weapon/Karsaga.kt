@@ -16,13 +16,58 @@
  */
 package io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon
 
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.entity.ai.attributes.WeaponAttributeModifiersProvider
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.ModItemGroup
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.ModRarity
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.clone
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.getDefaultModifiers
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.toImmutable
+import net.minecraft.entity.ai.attributes.Attribute
+import net.minecraft.entity.ai.attributes.AttributeModifier
+import net.minecraft.entity.ai.attributes.Attributes
+import net.minecraft.inventory.EquipmentSlotType
+import net.minecraft.item.ItemTier
+import net.minecraft.item.SwordItem
+
 /**
  * Rarity Legendary
  * Attack +2
- * Pain Accuracy +24%
- * Weakening Accuracy +24%
- * Increase damage/healing amount by 30% per skill
- * in hand at the end of each turn
+ * TODO: Pain Accuracy +24%
+ * TODO: Weakening Accuracy +24%
+ * TODO: Increase damage/healing amount by 30% per skill in hand at the end of each turn
  */
-class Karsaga {
+class Karsaga : SwordItem(
+    ItemTier.NETHERITE, 3, -2.4f, PROPERTIES
+), WeaponAttributeModifiersProvider {
+
+    companion object {
+        const val NAME = "karsaga"
+        private val PROPERTIES = Properties().tab(ModItemGroup).rarity(ModRarity.LEGENDARY)
+        private val mainHandModifiers = HashMultimap.create<Attribute, AttributeModifier>()
+        private val offhandModifiers = HashMultimap.create<Attribute, AttributeModifier>()
+    }
+
+    init {
+        Companion.offhandModifiers.put(
+            Attributes.ATTACK_DAMAGE,
+            AttributeModifier(
+                "${NAME}_attack_booster",
+                2.0,
+                AttributeModifier.Operation.ADDITION
+            )
+        )
+        Companion.mainHandModifiers.putAll(this.getDefaultModifiers())
+        Companion.mainHandModifiers.putAll(Companion.offhandModifiers.clone())
+    }
+
+    override val mainHandModifiers: Multimap<Attribute, AttributeModifier>
+        get() = Companion.mainHandModifiers.toImmutable()
+    override val offhandModifiers: Multimap<Attribute, AttributeModifier>
+        get() = Companion.offhandModifiers.toImmutable()
+
+    override fun getDefaultAttributeModifiers(slot: EquipmentSlotType): Multimap<Attribute, AttributeModifier> {
+        return super<WeaponAttributeModifiersProvider>.getDefaultAttributeModifiers(slot)
+    }
 }

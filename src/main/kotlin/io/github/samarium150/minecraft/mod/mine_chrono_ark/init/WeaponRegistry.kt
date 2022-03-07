@@ -16,13 +16,12 @@
  */
 package io.github.samarium150.minecraft.mod.mine_chrono_ark.init
 
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon.CreativeSword
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon.LongSword
-import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon.WoodenSwordPlusThirteen
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.item.weapon.*
 import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.MOD_ID
 import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.kotlinforforge.forge.KDeferredRegister
 
+@Suppress("unused")
 object WeaponRegistry {
 
     val WEAPONS = KDeferredRegister(ForgeRegistries.ITEMS, MOD_ID)
@@ -31,12 +30,50 @@ object WeaponRegistry {
         CreativeSword()
     }
 
+    // Uncommon
     val LONG_SWORD by WEAPONS.registerObject(LongSword.NAME) {
         LongSword()
     }
+    val RUSTY_DAGGER by WEAPONS.registerObject(RustyDagger.NAME) {
+        RustyDagger()
+    }
+    val BASTARD_SWORD by WEAPONS.registerObject(BastardSword.NAME) {
+        BastardSword()
+    }
 
+    // Rare
+    val RAPIER by WEAPONS.registerObject(Rapier.NAME) {
+        Rapier()
+    }
+    val AXE_OF_RAGE by WEAPONS.registerObject(AxeOfRage.NAME) {
+        AxeOfRage()
+    }
+    val RUSTY_HAMMER by WEAPONS.registerObject(RustyHammer.NAME) {
+        RustyHammer()
+    }
+
+    // EPic
+
+    // Legendary
     val WOODEN_SWORD_PLUS_THIRTEEN by WEAPONS.registerObject(WoodenSwordPlusThirteen.NAME) {
         WoodenSwordPlusThirteen()
     }
-
+    val BLACK_CRESCENT_SWORD by WEAPONS.registerObject(BlackCrescent.NAME) {
+        BlackCrescent()
+    }
+    val FORGOTTEN_KINGS_BLADE by WEAPONS.registerObject(ForgottenKingsBlade.NAME) {
+        ForgottenKingsBlade()
+    }
+    val MESSIAH_BLADE_PROTOTYPE by WEAPONS.registerObject(MessiahBladePrototype.NAME) {
+        MessiahBladePrototype()
+    }
+    val KARSAGA by WEAPONS.registerObject(Karsaga.NAME) {
+        Karsaga()
+    }
+    val REVENGER by WEAPONS.registerObject(Revenger.NAME) {
+        Revenger()
+    }
+    val DARK_FLAME_SWORD by WEAPONS.registerObject(DarkFlameSword.NAME) {
+        DarkFlameSword()
+    }
 }
