@@ -19,6 +19,8 @@ package io.github.samarium150.minecraft.mod.mine_chrono_ark.util
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.common.collect.ImmutableMultimap
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.mixin.accessor.SwordItemAccessor
+import io.github.samarium150.minecraft.mod.mine_chrono_ark.mixin.accessor.ToolItemAccessor
 import net.minecraft.entity.ai.attributes.Attribute
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.item.SwordItem
@@ -38,21 +40,13 @@ fun Multimap<Attribute, AttributeModifier>.clone(): Multimap<Attribute, Attribut
 }
 
 fun <T : TieredItem> T.getDefaultModifiers(): Multimap<Attribute, AttributeModifier> {
-    val res: Multimap<Attribute, AttributeModifier>
-    when (this) {
-        is SwordItem -> SwordItem::class.java.getDeclaredField("defaultModifiers").let {
-            it.isAccessible = true
-            @Suppress("UNCHECKED_CAST")
-            res = it.get(this) as Multimap<Attribute, AttributeModifier>
-            it.isAccessible = false
-        }
-        is ToolItem -> ToolItem::class.java.getDeclaredField("defaultModifiers").let {
-            it.isAccessible = true
-            @Suppress("UNCHECKED_CAST")
-            res = it.get(this) as Multimap<Attribute, AttributeModifier>
-            it.isAccessible = false
-        }
-        else -> res = ImmutableMultimap.of()
+    return when (this) {
+        is SwordItem -> (this as SwordItemAccessor).defaultModifiers
+        is ToolItem -> (this as ToolItemAccessor).defaultModifiers
+        else -> ImmutableMultimap.of()
     }
-    return res
+}
+
+fun <K, V> Multimap<K, V>.toImmutable(): ImmutableMultimap<K, V> {
+    return ImmutableMultimap.copyOf(this)
 }

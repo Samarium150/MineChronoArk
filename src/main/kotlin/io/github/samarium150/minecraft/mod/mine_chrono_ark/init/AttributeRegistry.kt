@@ -23,6 +23,7 @@ import io.github.samarium150.minecraft.mod.mine_chrono_ark.util.MOD_ID
 import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.kotlinforforge.forge.KDeferredRegister
 
+@Suppress("unused")
 object AttributeRegistry {
 
     val ATTRIBUTES = KDeferredRegister(ForgeRegistries.ATTRIBUTES, MOD_ID)
